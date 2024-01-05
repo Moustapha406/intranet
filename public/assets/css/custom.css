@@ -1,0 +1,38 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito);
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap');
+
+/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY3VzdG9tLmNzcyIsInNvdXJjZXMiOlsiY3VzdG9tLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiJ9 */
+
+/*# sourceMappingURL=custom.css.map */
+:root {
+    --font-family-sans-serif: "Nunito", sans-serif;
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-family: 'Montserrat', sans-serif;
+}
+.user-initial-circle{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    line-height: 40px;
+    font-size: 18px;
+}
+.main-sidebar .sidebar-menu li a .feather {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.main-sidebar .sidebar-menu li a{
+    font-weight: 400;
+    color: #0D0A0A;
+}
+.main-sidebar .sidebar-menu li a .material-symbols-outlined {
+    width: 28px;
+    font-size: 25px;
+    margin-right: 10px;
+    text-align: center
+}
