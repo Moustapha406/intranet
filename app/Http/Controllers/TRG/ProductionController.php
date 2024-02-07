@@ -14,21 +14,31 @@ use App\Http\Controllers\Controller;
 use App\Models\Atelier;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Auth;
 
 class ProductionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function __construct(){
+        $this->middleware('permission:prod-read|prod-create|prod-edit|prod-delete',['only'=> ['index','store']]);
+        $this->middleware('permission:prod-create',['only' => ['create','store']]);
+        $this->middleware('permission:prod-edit',['only' => ['edit','update']]);
+        $this->middleware('permission:prod-delete',['only' => ['destroy']]);
+    }
     public function index(Request $request)
     {
+
+        
 
         $productions = ProductionJour::all();
 
         $productionX3s = ProductionX3::all();
 
 
-        $ateliers = Atelier::with('articles.productionX3s')->get();
+        $ateliers = Atelier::where('user_id',Auth()->user()->id)->with('articles.productionX3s')->get();
+        
         $qtyProd = 0;
 
         foreach ($ateliers as $atelier) {
@@ -58,7 +68,7 @@ class ProductionController extends Controller
         $moyenne = 0;
 
 
-        if ($request->date) {
+        if ($request->date && $request->atelier) {
 
 
             $date_selected = $request->input('date');
@@ -75,7 +85,7 @@ class ProductionController extends Controller
                 ->whereMonth('dateProd', $mois)
                 ->sum('qtyProd');
 
-            $atelierSelected = Atelier::find($request->atelier);
+            $atelierSelected = Atelier::findOrFail($request->atelier);
 
             $atelierArticle = $atelierSelected->articles->pluck('article');
             $nbreQuart = null;

@@ -42,11 +42,12 @@ Route::middleware('auth')
 
 
 Route::prefix('admin')
-    ->middleware('auth')
+    ->middleware(['auth'])
     ->namespace('App\Http\Controllers')
     ->group(function () {
         Route::resources(['roles' => 'Admin\RoleController']);
         Route::resources(['users' => 'Admin\UserController']);
+        Route::resources(['permissions' => 'Admin\PermissionController']);
     });
 
 Route::prefix('trg')

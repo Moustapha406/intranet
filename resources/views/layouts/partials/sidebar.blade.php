@@ -17,6 +17,7 @@
                     <li><a class="nav-link" href="{{route('users.index')}}">Utilisateurs</a></li>
 
                     <li><a class="nav-link" href="{{route('roles.index')}}">Rôles</a></li>
+                    <li><a class="nav-link" href="{{route('permissions.index')}}">Permissions</a></li>
                     
                 </ul>
             </li>

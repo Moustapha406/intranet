@@ -74,13 +74,16 @@
 
                         </tr>
                     @endforeach
+                    
                     </table>
+                    
                   </div>
+                  
                 </div>
               </div>
             </div>
           </div>
-
+<button class="btn btn-action">bonjou</button>
 @endsection
 @push('script')
         <script src="{{asset('assets/bundles/select2/dist/js/select2.full.min.js')}}"></script>

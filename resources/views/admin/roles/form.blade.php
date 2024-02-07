@@ -13,31 +13,28 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                         </div>
-                        <h4>Liste des Rôles</h4>
+                        <h4>Créer un rôle</h4>
                         <div class="card-body p-4 ">
                             <div class="row">
+                                
                                 <div class="form-group col-6">
-                                    <label for="code">code</label>
-                                    <input id="code" type="text" class="form-control" name="code" value="{{isset($role) ? $role->code : ''}}" autofocus>
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="libelle">Rôles</label>
-                                    <input id="libelle" type="text" class="form-control" name="libelle" value="{{isset($role) ? $role->libelle : ''}}" >
+                                    <label for="name">Rôles</label>
+                                    <input id="name" type="text" class="form-control" name="name" value="{{isset($role) ? $role->name : ''}}" >
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="form-group col-10">
-                                    <label for="prenom">Utilisateurs</label>
-                                    <select class="form-control select2" multiple="" name="users[]">
+                                    <label for="prenom">Permissions</label>
+                                    <select class="form-control select2" multiple="" name="permission[]">
                                         <option value="">....</option>
                                         @php
-                                            $selectedUsers= collect(old('users',isset($role) ? $role->users->pluck('id')->toArray() : []))
+                                            $selectedPermission= collect(old('permission',isset($role) ? $role->permissions->pluck('id')->toArray() : []))
                                         @endphp
 
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->id }}" {{ $selectedUsers->contains($user->id) ? 'selected' : '' }} >
-                                                {{$user->email}}
+                                        @foreach ($permissions as $permission)
+                                            <option value="{{ $permission->name }}" {{ $selectedPermission->contains($permission->id) ? 'selected' : '' }} >
+                                                {{$permission->name}}
                                             </option>
                                         @endforeach
                                     </select>
@@ -48,7 +45,7 @@
                         </div>
 
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary" type="submit">{{ isset($user->id) ? "Modifier" : "Ajouter"}}</button>
+                            <button class="btn btn-primary" type="submit">{{ isset($role->id) ? "Modifier" : "Ajouter"}}</button>
                             <a href="{{route('roles.index')}}" class="btn btn-secondary">Annuler</a>
                         </div>
                         

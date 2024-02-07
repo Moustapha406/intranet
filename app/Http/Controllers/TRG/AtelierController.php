@@ -13,6 +13,12 @@ class AtelierController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct(){
+        $this->middleware('permission:atelier-read|atelier-create|atelier-edit|atelier-delete',['only'=> ['index','store']]);
+        $this->middleware('permission:atelier-create',['only' => ['create','store']]);
+        $this->middleware('permission:atelier-edit',['only' => ['edit','update']]);
+        $this->middleware('permission:atelier-delete',['only' => ['destroy']]);
+    }
     public function index()
     {
         $ateliers = Atelier::on('mysql')->get();

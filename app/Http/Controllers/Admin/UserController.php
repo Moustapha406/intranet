@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Role;
+use DB;
+// use App\Models\Role;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -18,9 +20,12 @@ class UserController extends Controller
     public function index()
     {
 
-        $users = User::all();
+       // $users = User::all();
         $roles = Role::all();
 
+        $users=User::with("roles")->get();
+
+        
 
         return view('admin.users.index', compact('users', 'roles'));
     }
@@ -67,7 +72,9 @@ class UserController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        $user->roles()->attach($request->input('roles', []));
+        //$user->roles()->attach($request->input('roles', []));
+
+        $user->assignRole($request->input('roles',[]));
 
         event(new Registered($user));
 
@@ -97,11 +104,11 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
         $data = $request->validate([
             'name' => 'string',
-            'email' => ['required', 'string', 'email', 'unique:users,email,' . $user->id],
+            'email' => ['required', 'string', 'email', 'unique:users,email,' .$id],
             'nom' => 'required|string',
             'prenom' => 'required|string',
             'genre' => 'required',
@@ -111,6 +118,7 @@ class UserController extends Controller
             'is_active' => ''
         ]);
 
+        $user=User::findOrfail($id);
         $user->update($data);
 
         if (!empty($request->password)) {
@@ -121,8 +129,9 @@ class UserController extends Controller
 
 
 
-        $user->roles()->sync($request->input('roles', []));
-
+        //$user->roles()->sync($request->input('roles', []));
+        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        $user->assignRole($request->input('roles',[]));
         $user->save();
 
         return redirect(route('users.index'));

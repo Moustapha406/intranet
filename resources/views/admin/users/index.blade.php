@@ -46,6 +46,13 @@
                                     <div class="badge badge-danger">Desactivé</div>
                                 @endif
                             </td>
+
+                            <td> 
+                              @foreach ($user->roles as $role)
+                                  <span class="badge badge-info">{{$role->name}}</span>
+                              @endforeach
+                              
+                             </td>
                             
                             <td class="text-center">
                                 <a href="{{route('users.edit',$user->id)}}" class="test-info">

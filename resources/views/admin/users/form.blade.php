@@ -74,8 +74,8 @@
                                         @endphp
 
                                         @foreach ($roles as $role)
-                                            <option value="{{ $role->id }}" {{ $selectedRoles->contains($role->id) ? 'selected' : '' }} >
-                                                {{$role->libelle}}
+                                            <option value="{{ $role->name }}" {{ $selectedRoles->contains($role->id) ? 'selected' : '' }} >
+                                                {{$role->name}}
                                             </option>
                                         @endforeach
                                     </select>

@@ -3,20 +3,32 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Role;
+use Spatie\Permission\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
+use DB;
 
 class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $roles = Role::all();
 
-        return view('admin.roles.index', compact('roles'));
+    // public function  __construct(){
+    //     $this->middleware('permission:role.read|role.create|role.edit|role.delete',['only'=> ['index','store']]);
+    //     $this->middleware('permission:role.create',['only' => ['create','store']]);
+    //     $this->middleware('permission:role.edit',['only' => ['edit','update']]);
+    //     $this->middleware('permission:role.delete',['only' => ['destroy']]);
+    // }
+    public function index(Request $request)
+    {
+        $roles = Role::orderBy('id','DESC')->paginate(10);
+
+        //dd($roles);
+
+        return view('admin.roles.index', compact('roles'))
+                    ->with('i',($request->input('page',1) -1 ) * 10);
     }
 
     /**
@@ -24,10 +36,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $users = User::all();
-        $roles = Role::all();
+        $permissions=Permission::get();
 
-        return view('admin.roles.form', compact('users', 'roles'));
+        return view('admin.roles.form', compact('permissions'));
     }
 
     /**
@@ -35,28 +46,34 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+       
         $request->validate([
-            'code' => ['required', 'unique:roles,code'],
-            'libelle' => ['required']
+            'name' => ['required','unique:roles,name'],
+            //'permissions' => ['required']
         ]);
 
-        $role = Role::create([
-            'code' => $request->code,
-            'libelle' => $request->libelle
-        ]);
+        $role = Role::create([ 'name' => $request->name,]);
+
+        $permission=Permission::wherein('id',$request->input('permission',[]))->get();
+        
+        $role->syncPermissions($request->input('permission'));
 
         $role->save();
 
 
-        return redirect(route('roles.index'));
+        return redirect()->route('roles.index')->with('success','le role est bien créer');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Role $role)
+    public function show($id)
     {
-        $role->with('users')->get();
+        $role=Role::findById($id);
+
+        $rolePermissions=Permission::join('role_has_permissions',"role_has_permissions.permission_id","=","permissions.id")
+                                    ->where("role_has_permissions.role_id",$id)
+                                    ->get();
 
         return view('admin.roles.show', compact('role'));
     }
@@ -64,38 +81,44 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Role $role)
+    public function edit($id)
     {
         //
-        $role->with('users')->get();
+        $role=Role::findById($id);
+        //$permission=Permission::get();
 
-        $users = User::all();
+        // $rolePermission=DB::table('role_has_permissions')->where('role_has_permissions.role_id',$id)
+        //                 ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
+        //                 ->all();
 
-        return view('admin.roles.form', compact('role', 'users'));
+        $permissions=Permission::all();
+            
+
+        return view('admin.roles.form', compact('role', 'permissions'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, $id)
     {
-
-
-
+        
         $data = $request->validate([
-            'code' => ['required', 'string'],
-            'libelle' => ['required', 'string']
+            'name' => ['required', 'string'],
+            'permission' => []
         ]);
 
+        $role=Role::find($id);
 
+        $role->name=$data['name'];
 
-        $role->update($data);
+        $role->syncPermissions($request->input('permission'));
 
-        $role->users()->sync($request->input('users', []));
+        //$role->users()->sync($request->input('users', []));
 
         $role->save();
 
-        return redirect(route('roles.index'));
+        return redirect()->route('roles.index')->with("success","La mise a jour est bien fait");
     }
 
     /**

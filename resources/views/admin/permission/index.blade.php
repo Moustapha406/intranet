@@ -7,7 +7,7 @@
                 <div class="card-header d-flex justify-content-between">
                     <h4>Liste des rôles</h4>
                     <div class="button text-right ml-4">
-                        <a href="{{route('roles.create')}}"  >
+                        <a href="{{route('permissions.create')}}"  >
                             <span class="material-symbols-outlined mt-2">person_add</span>
                         </a>
                     </div> 
@@ -16,35 +16,34 @@
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <tr>
+                                <th>Permission</th>
                                 <th>Rôles</th>
-                                <th>Utilisateurs</th>
                                 <th class="text-center">Action</th>
                             </tr>
 
-                            @foreach ($roles as $key=>$role)
+                            @foreach ($permissions as $key=>$permission)
                                 <tr>
-                                    <td>{{$role->name}}</td>
+                                    <td>{{$permission->name}}</td>
                                     <td>
-                                        @foreach ($role->permissions as $permission)
-                                            <span class="badge badge-info">{{$permission->name}}</span>
+                                        @foreach ($permission->roles as $role)
+                                            <span class="badge badge-info">{{$role->name}}</span>
                                         @endforeach
                                     </td>
                                     <td>
-                                        <a href="{{route('roles.edit',$role->id)}}" class="text-info">
+                                        <a href="{{route('permissions.edit',$permission->id)}}" class="text-info">
                                             <span class="material-symbols-outlined">edit</span>
                                         </a>
 
-                                        <a herf="#" onClick="deleteRole('rôles',{{$role->id}})" class="text-danger">
+                                        <a herf="#" onClick="deletePermission('permissions',{{$permission->id}})" class="text-danger">
                                             <span class="material-symbols-outlined">delete</span>
                                         </a>
-                                        <form id="role_{{$role->id}}" method="POST" action="{{route('roles.destroy',$role->id)}}">
+                                        <form id="permission_{{$permission->id}}" method="POST" action="{{route('permissions.destroy',$permission->id)}}">
                                             @csrf
                                             @method("DELETE")
                                         </form>
                                     </td>
 
                                     
-
 
                                 </tr>
                             @endforeach
