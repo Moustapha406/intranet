@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="form-group col-7">
                                     <label for="prenom">Roles</label>
-                                    {{-- <select class="form-control select2" multiple="" name="permissions[]">
+                                    <select class="form-control select2" multiple="" name="roles[]">
                                         <option value="">....</option>
                                         @php
                                             $selectedRoles= collect(old('permissions',isset($permission) ? $role->permissions->pluck('id')->toArray() : []))
@@ -34,7 +34,7 @@
                                                 {{$role->name}}
                                             </option>
                                         @endforeach
-                                    </select> --}}
+                                    </select>
                                 </div>
                             </div>
 

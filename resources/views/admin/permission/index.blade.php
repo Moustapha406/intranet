@@ -34,10 +34,12 @@
                                             <span class="material-symbols-outlined">edit</span>
                                         </a>
 
-                                        <a herf="#" onClick="deletePermission('permissions',{{$permission->id}})" class="text-danger">
+                                    
+
+                                        <a href="#" class="text-danger" onClick="deletePermission('permissions',{{$permission->id}})">
                                             <span class="material-symbols-outlined">delete</span>
                                         </a>
-                                        <form id="permission_{{$permission->id}}" method="POST" action="{{route('permissions.destroy',$permission->id)}}">
+                                        <form id="delete-{{$permission->id}}" action="{{route('permissions.destroy',$permission->id)}}" method="POST">
                                             @csrf
                                             @method("DELETE")
                                         </form>
@@ -50,6 +52,12 @@
                         </table>
                     </div>
                 </div>
+
+                <div class="card-footer text-right">
+                    <nav class="d-inline-block">
+                      {{$permissions->links()}}
+                    </nav>
+                </div>
                     
             </div>
 
@@ -57,6 +65,9 @@
     </div>
 @endsection
 @push('script')
+        <script>
+            
+        </script>
         <script src="{{asset('assets/bundles/select2/dist/js/select2.full.min.js')}}"></script>
         <script src="{{asset('assets/bundles/jquery-selectric/jquery.selectric.min.js')}}"></script>
         <script src="{{asset('assets/js/page/forms-advanced-forms.js')}}"></script>
@@ -66,4 +77,11 @@
         <script src="{{asset('assets/bundles/jquery-ui/jquery-ui.min.js')}}"></script>
         <script src="{{asset('assets/js/page/datatables.js')}}"></script>
 
+        <script>
+            function deletePermission(itemType, itemId) {
+                if (confirm(`Êtes-vous sûr de vouloir supprimer ce (t) ${itemType} ?`)) {
+                    document.getElementById(`delete-${itemId}`).submit();
+                }
+            }
+        </script>
 @endpush

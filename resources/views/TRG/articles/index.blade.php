@@ -51,17 +51,21 @@
                             </td> --}}
                             
                             <td class="text-center">
-                                <a href="{{route('article.edit',$article->id)}}" class="test-info">
-                                  <span class="material-symbols-outlined">edit</span>
-                                </a>
+                                @can('atelier-edit')
+                                  <a href="{{route('article.edit',$article->id)}}" class="test-info">
+                                    <span class="material-symbols-outlined">edit</span>
+                                  </a>
+                                @endcan
                                 <a href="{{route('article.show', $article->id)}}" data-toggle="modal" data-target="#article_{{$article->id}}" class="text-info">
-                                  
                                   <span class="material-symbols-outlined">info</span>
                                 </a>
 
-                                <a href="#" class="text-danger" onClick="deleteConfirmation('article',{{$article->id}})">
-                                  <span class="material-symbols-outlined">delete</span>
-                                </a>
+                                @can('article-delete')
+                                  <a href="#" class="text-danger" onClick="deleteConfirmation('article',{{$article->id}})">
+                                    <span class="material-symbols-outlined">delete</span>
+                                  </a>
+                                @endcan
+
                                 <form id="delete-{{$article->id}}" action="{{route('article.destroy',$article->id)}}" method="POST">
                                   @csrf
                                   @method("DELETE")
@@ -80,6 +84,12 @@
                   </div>
                   
                 </div>
+                  <div class="card-footer text-right">
+                    <nav class="d-inline-block">
+                      {{$articles->links()}}
+                    </nav>
+                  </div>
+                  
               </div>
             </div>
           </div>

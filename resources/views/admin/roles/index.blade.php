@@ -34,22 +34,35 @@
                                             <span class="material-symbols-outlined">edit</span>
                                         </a>
 
-                                        <a herf="#" onClick="deleteRole('rôles',{{$role->id}})" class="text-danger">
+                                        {{-- <a herf="#" onClick="deleteRole('rôles',{{$role->id}})" class="text-danger">
                                             <span class="material-symbols-outlined">delete</span>
                                         </a>
                                         <form id="role_{{$role->id}}" method="POST" action="{{route('roles.destroy',$role->id)}}">
                                             @csrf
                                             @method("DELETE")
-                                        </form>
-                                    </td>
+                                        </form> --}}
 
-                                    
+                                        <a href="#" class="text-danger" onClick="deleteRoles('roles',{{$role->id}})">
+                                            <span class="material-symbols-outlined">delete</span>
+                                        </a>
+                                        <form id="delete-{{$role->id}}" action="{{route('roles.destroy',$role->id)}}" method="POST">
+                                            @csrf
+                                            @method("DELETE")
+                                        </form>
+                                        
+                                    </td>
 
 
                                 </tr>
                             @endforeach
                         </table>
                     </div>
+                </div>
+
+                <div class="card-footer text-right">
+                    <nav class="d-inline-block">
+                      {{$roles->links()}}
+                    </nav>
                 </div>
                     
             </div>
@@ -66,5 +79,15 @@
         <script src="{{asset('assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{asset('assets/bundles/jquery-ui/jquery-ui.min.js')}}"></script>
         <script src="{{asset('assets/js/page/datatables.js')}}"></script>
+
+        <script>
+            
+            function deleteRoles(itemType, itemId) {
+                if (confirm(`Êtes-vous sûr de vouloir supprimer ce (t) ${itemType} ?`)) {
+                    document.getElementById(`delete-${itemId}`).submit();
+                }
+            }
+        
+        </script>
 
 @endpush

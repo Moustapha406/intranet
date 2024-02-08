@@ -14,9 +14,9 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permissions=Permission::orderBy("id","desc")->paginate(10);
+        $permissions = Permission::orderBy("id", "desc")->paginate(10);
 
-        return view("admin.permission.index",compact('permissions'));
+        return view("admin.permission.index", compact('permissions'));
     }
 
     /**
@@ -24,8 +24,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        $roles=Role::all();
-        return view("admin.permission.form",compact("roles"));
+        $roles = Role::all();
+        return view("admin.permission.form", compact("roles"));
     }
 
     /**
@@ -33,18 +33,18 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         $request->validate([
             "name" => ["required"]
         ]);
 
-        $per=Permission::create($request->only('name'));
+        $per = Permission::create($request->only('name'));
 
         // $permission=Permission::create(['name'=>$request->name,]);
 
-         $per->save();
+        $per->save();
 
-        return redirect()->route('permissions.index')->with('success','La permission est bien ajouté');
-
+        return redirect()->route('permissions.index')->with('success', 'La permission est bien ajouté');
     }
 
     /**
@@ -60,10 +60,10 @@ class PermissionController extends Controller
      */
     public function edit(string $id)
     {
-        $permission=Permission::findOrFail($id);
-        $roles=Role::all();
+        $permission = Permission::findOrFail($id);
+        $roles = Role::all();
 
-        return view("admin.permission.form",compact("permission",'roles'));
+        return view("admin.permission.form", compact("permission", 'roles'));
     }
 
     /**
@@ -71,22 +71,24 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data=$request->validate([
-            'name'=> ['requered','string'],
+        $data = $request->validate([
+            'name' => ['requered', 'string'],
         ]);
 
-        $permission=Permission::findOrfail($id);
+        $permission = Permission::findOrfail($id);
         $permission->update($data);
         $permission->save();
 
-        return redirect()->route('permissions.index')->with('success','La permission  a été bien modifier');
+        return redirect()->route('permissions.index')->with('success', 'La permission  a été bien modifier');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        Permission::findOrFail($id)->delete();
+
+        return redirect()->route('permissions.index')->with('success', "La permission a été supprimé avec succées");
     }
 }

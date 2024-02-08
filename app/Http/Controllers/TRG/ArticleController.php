@@ -12,17 +12,20 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function __construct(){
-        $this->middleware('permission:article-read|article-create|article-edit|article-delete',['only'=> ['index','store']]);
-        $this->middleware('permission:article-create',['only' => ['create','store']]);
-        $this->middleware('permission:article-edit',['only' => ['edit','update']]);
-        $this->middleware('permission:article-delete',['only' => ['destroy']]);
-    }
-    public function index(Request $request)
+    public function __construct()
     {
-        $articles = Article::orderBy('article','desc')->paginate(10);
+        $this->middleware('permission:article-read|article-create|article-edit|article-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:article-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:article-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:article-delete', ['only' => ['destroy']]);
+    }
 
-        return view('TRG.articles.index', compact('articles'))->with('i',($request->input('page',1) -1 ) *10);
+
+    public function index()
+    {
+        $articles = Article::orderBy('article', 'desc')->paginate(30);
+
+        return view('TRG.articles.index', compact('articles')); //->with('i',($request->input('page',1) -1 ) *10)
     }
 
     /**
@@ -119,8 +122,8 @@ class ArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $article = Article::findorFail($id);
     }
 }

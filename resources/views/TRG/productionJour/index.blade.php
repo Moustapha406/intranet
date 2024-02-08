@@ -136,9 +136,11 @@ input[type=number] {
                             <td> {{$production['cadenceJournaliere']}} </td>
                             <td> {{$production['NbreQuartDefault']}} </td>
                             <td class="text-center">
-                                <a href="{{route('productions.edit',['atelier'=>$id_atelier,'date'=>$dateString,'usine'=>$production['usine'] ])}}" class="test-info">
-                                  <span class="material-symbols-outlined">add</span>
-                                </a>
+                                @can('prod-edit')
+                                    <a href="{{route('productions.edit',['atelier'=>$id_atelier,'date'=>$dateString,'usine'=>$production['usine'] ])}}" class="test-info">
+                                        <span class="material-symbols-outlined">add</span>
+                                    </a>
+                                @endcan
                             </td>
                         </tr>
 

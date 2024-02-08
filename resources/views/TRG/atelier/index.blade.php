@@ -53,17 +53,23 @@
                             <td class="align-middle">{{$atelier->TRGObjectif}}</td>
                             
                             <td class="text-center">
-                                <a href="{{route('atelier.edit',$atelier->id)}}" class="test-info">
-                                  <span class="material-symbols-outlined">edit</span>
-                                </a>
-                                <a href="{{route('atelier.affecter',$atelier->id)}}"  class="edit_square">
-                                  
-                                  <span class="material-symbols-outlined">edit_square</span>
-                                </a>
+                                @can('atelier-edit')
+                                  <a href="{{route('atelier.edit',$atelier->id)}}" class="test-info">
+                                    <span class="material-symbols-outlined">edit</span>
+                                  </a>
+                                @endcan
+                                
+                                @can('atelier-affecter')
+                                  <a href="{{route('atelier.affecter',$atelier->id)}}"  class="edit_square"> 
+                                    <span class="material-symbols-outlined">edit_square</span>
+                                  </a>
+                                @endcan
 
-                                <a href="#" class="text-danger" onClick="deleteConfirmation('atelier',{{$atelier->id}})">
-                                  <span class="material-symbols-outlined">delete</span>
-                                </a>
+                                @can('atelier-delete')
+                                  <a href="#" class="text-danger" onClick="deleteConfirmation('atelier',{{$atelier->id}})">
+                                    <span class="material-symbols-outlined">delete</span>
+                                  </a>
+                                @endcan
                                 <form id="delete-{{$atelier->id}}" action="{{route('atelier.destroy',$atelier->id)}}" method="POST">
                                   @csrf
                                   @method("DELETE")
@@ -79,6 +85,11 @@
                     </table>
                   </div>
                 </div>
+                <div class="card-footer text-right">
+                    <nav class="d-inline-block">
+                      {{$ateliers->links()}}
+                    </nav>
+                  </div>
               </div>
             </div>
           </div>

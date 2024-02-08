@@ -8,6 +8,7 @@ use App\Models\User;
 use DB;
 // use App\Models\Role;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Spatie\Permission\Models\Role;
@@ -20,12 +21,12 @@ class UserController extends Controller
     public function index()
     {
 
-       // $users = User::all();
+        // $users = User::all();
         $roles = Role::all();
 
-        $users=User::with("roles")->get();
+        $users = User::with("roles")->get();
 
-        
+
 
         return view('admin.users.index', compact('users', 'roles'));
     }
@@ -74,7 +75,7 @@ class UserController extends Controller
 
         //$user->roles()->attach($request->input('roles', []));
 
-        $user->assignRole($request->input('roles',[]));
+        $user->assignRole($request->input('roles', []));
 
         event(new Registered($user));
 
@@ -108,7 +109,7 @@ class UserController extends Controller
     {
         $data = $request->validate([
             'name' => 'string',
-            'email' => ['required', 'string', 'email', 'unique:users,email,' .$id],
+            'email' => ['required', 'string', 'email', 'unique:users,email,' . $id],
             'nom' => 'required|string',
             'prenom' => 'required|string',
             'genre' => 'required',
@@ -118,7 +119,7 @@ class UserController extends Controller
             'is_active' => ''
         ]);
 
-        $user=User::findOrfail($id);
+        $user = User::findOrfail($id);
         $user->update($data);
 
         if (!empty($request->password)) {
@@ -130,8 +131,8 @@ class UserController extends Controller
 
 
         //$user->roles()->sync($request->input('roles', []));
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
-        $user->assignRole($request->input('roles',[]));
+        DB::table('model_has_roles')->where('model_id', $id)->delete();
+        $user->assignRole($request->input('roles', []));
         $user->save();
 
         return redirect(route('users.index'));
@@ -140,8 +141,15 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        if (Auth()->user()->id != $id) {
+            $user = User::findOrFail($id)->delete();
+        } else {
+            return redirect()->route('users.index')->with('warning', "Impossible de supprimer l'utilisateur");
+        }
+
+
+        return redirect()->route('users.index')->with('success', "L'utilisateur est bien supprimé");
     }
 }
