@@ -10,7 +10,7 @@
                     @if (isset($user->id))
                         @method('PUT')
                     @endif
-                    <div class="card">
+                    <div class="card card-primary">
                         <div class="card-header d-flex justify-content-between">
                         <h4>Liste des utilisateurs</h4>
                         </div>

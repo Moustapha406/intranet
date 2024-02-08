@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-10 offset-1">
-            <div class="card">
+            <div class="card card-primary">
                 <div class="card-header d-flex justify-content-between">
                     <h4>Liste des rôles</h4>
                     <div class="button text-right ml-4">

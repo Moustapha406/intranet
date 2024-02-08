@@ -3,9 +3,9 @@
 @section('content')
         <div class="row">
             <div class="col-12">
-              <div class="card">
+              <div class="card card-primary">
                 <div class="card-header d-flex justify-content-between">
-                  <h4>Liste des utilisateurs</h4>
+                  <h4 >Liste des utilisateurs</h4>
                   <div class="card-header-form">
                     <form>
                       <div class="input-group">

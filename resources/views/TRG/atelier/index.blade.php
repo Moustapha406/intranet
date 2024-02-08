@@ -3,7 +3,7 @@
 @section('content')
         <div class="row">
             <div class="col-12">
-              <div class="card">
+              <div class="card card-primary">
                 <div class="card-header d-flex justify-content-between">
                   <h4>Liste des ateliers</h4>
                   <div class="card-header-form">
@@ -18,11 +18,13 @@
                   </div>
                   <div class="button text-right ml-4">
 
-                    <a href="{{route('atelier.create')}}" class="btn btn-icon icon-left btn-primary">
+                    @can('atelier-create')
+                      <a href="{{route('atelier.create')}}" class="btn btn-icon icon-left btn-primary">
                       {{-- <i class="far fa-file-alt"></i> Ajouter --}}
-                      <i class="fa fa-plus-square" aria-hidden="true"></i> Ajouter
+                        <i class="fa fa-plus-square" aria-hidden="true"></i> Ajouter
 
-                    </a>
+                      </a>
+                    @endcan
                     
                   </div>
                       

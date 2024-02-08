@@ -7,21 +7,27 @@
         </div>
          
         <ul class="sidebar-menu">
-            <li class="menu-header">Paramétrage</li>
 
-            <li class="dropdown">
-                <a href="#" class="menu-toggle nav-link has-dropdown">
-                    <span class="material-symbols-outlined">groups</span><span>Gestion des utilisateurs</span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="{{route('users.index')}}">Utilisateurs</a></li>
+            @can('admin-read')
+                <li class="menu-header">Administration</li>
+            @endcan
 
-                    <li><a class="nav-link" href="{{route('roles.index')}}">Rôles</a></li>
-                    <li><a class="nav-link" href="{{route('permissions.index')}}">Permissions</a></li>
-                    
-                </ul>
-            </li>
-            <li class="dropdown">
+            @can('admin-read')
+                <li class="dropdown">
+                    <a href="#" class="menu-toggle nav-link has-dropdown">
+                        <span class="material-symbols-outlined">groups</span><span>Parametrage</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="nav-link" href="{{route('users.index')}}">Utilisateurs</a></li>
+
+                        <li><a class="nav-link" href="{{route('roles.index')}}">Rôles</a></li>
+                        <li><a class="nav-link" href="{{route('permissions.index')}}">Permissions</a></li>
+                        
+                    </ul>
+                </li>
+            @endcan
+
+            {{-- <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown">
                     <span class="material-symbols-outlined">menu</span><span>Gestion des menus</span>
                 </a>
@@ -29,17 +35,9 @@
                     <li><a class="nav-link" href="#">Menu</a></li>
 
                 </ul>
-            </li>
+            </li> --}}
 
-            <li class="dropdown">
-                <a href="#" class="menu-toggle nav-link has-dropdown">
-                    <span class="material-symbols-outlined">lists</span><span>Répertoire</span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="">Utilisateur</a></li>
-                    <li><a class="nav-link" href="">Fournisseur</a></li>
-                </ul>
-            </li>
+            
             
             {{--            @endcan--}}
 

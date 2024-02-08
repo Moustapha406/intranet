@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="section-body">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center ">
             <div class="col-10">
                 <form method="post"
                     action="{{ isset($role->id) ? route('roles.update',$role->id) : route('roles.store')}}">
@@ -10,10 +10,10 @@
                     @if (isset($role->id))
                         @method('PUT')
                     @endif
-                    <div class="card">
+                    <div class="card card-primary">
                         <div class="card-header d-flex justify-content-between">
+                        <h4>Création des rôles</h4>
                         </div>
-                        <h4>Créer un rôle</h4>
                         <div class="card-body p-4 ">
                             <div class="row">
                                 

@@ -3,25 +3,25 @@
 @section('content')
     <div class="section-body">
         <div class="row justify-content-center">
-            <div class="col-10">
+            <div class="col-11">
                 <form method="post"
-                    action="{{ isset($role->id) ? route('permissions.update',$role->id) : route('permissions.store')}}">
+                    action="{{ isset($permission->id) ? route('permissions.update',$permission->id) : route('permissions.store')}}">
                     @csrf
-                    @if (isset($role->id))
+                    @if (isset($permission->id))
                         @method('PUT')
                     @endif
-                    <div class="card">
+                    <div class="card card-primary">
                         <div class="card-header d-flex justify-content-between">
+                        <h4>Création des permission</h4>
                         </div>
-                        <h4>Créer une permission</h4>
                         <div class="card-body p-4 ">
                             <div class="row">
                                 
-                                <div class="form-group col-5">
+                                <div class="form-group col-8 offset-2">
                                     <label for="name">Permission</label>
                                     <input id="name" type="text" class="form-control" name="name" value="{{isset($permission) ? $permission->name : ''}}" >
                                 </div>
-                                <div class="form-group col-7">
+                                {{-- <div class="form-group col-7">
                                     <label for="prenom">Roles</label>
                                     <select class="form-control select2" multiple="" name="roles[]">
                                         <option value="">....</option>
@@ -35,7 +35,7 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div> --}}
                             </div>
 
 
