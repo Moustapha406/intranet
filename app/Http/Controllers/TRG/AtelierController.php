@@ -67,7 +67,7 @@ class AtelierController extends Controller
             'TRGObjectif' => $request->TRGObjectif
         ]);
 
-        $atelier->users()->associate($request->input('user'));
+        $atelier->users()->attach($request->input('users', []));
 
         $atelier->save();
 
@@ -158,9 +158,9 @@ class AtelierController extends Controller
 
         $atelier->update($data);
 
-        $user = User::find($request->user);
+        // $user = User::find($request->user);
 
-        $atelier->users()->associate($user);
+        $atelier->users()->sync($request->input('users', []));
 
         $atelier->save();
 

@@ -141,6 +141,13 @@ input[type=number] {
                                         <span class="material-symbols-outlined">add</span>
                                     </a>
                                 @endcan
+                                <a href="{{route('production.show',['atelier'=>$id_atelier,'date'=>$dateString,'usine'=>$production['usine'] ])}}" class="test-info">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </a>
+                                
+                                {{-- <a href="{{route('productionJour.show', $article->id)}}" data-toggle="modal" data-target="#article_{{$article->id}}" class="text-info">
+                                  <span class="material-symbols-outlined">edit</span>
+                                </a> --}}
                             </td>
                         </tr>
 

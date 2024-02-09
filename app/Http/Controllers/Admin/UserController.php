@@ -128,8 +128,6 @@ class UserController extends Controller
             ]);
         }
 
-
-
         //$user->roles()->sync($request->input('roles', []));
         DB::table('model_has_roles')->where('model_id', $id)->delete();
         $user->assignRole($request->input('roles', []));

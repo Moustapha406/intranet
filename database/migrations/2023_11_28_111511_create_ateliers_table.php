@@ -22,8 +22,8 @@ return new class extends Migration
             $table->integer("nbre_ligne");
             $table->integer("nbre_heure");
             $table->decimal("TRGObjectif");
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->on('users')->references('id')->onUpdate('cascade');
+            // $table->unsignedBigInteger('user_id')->nullable();
+            // $table->foreign('user_id')->on('users')->references('id')->onUpdate('cascade');
             $table->timestamps();
         });
     }

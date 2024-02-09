@@ -35,6 +35,6 @@ class Atelier extends Model
 
     public function users()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsToMany(User::class, 'ateliers_users', 'atelier_id', 'user_id');
     }
 }

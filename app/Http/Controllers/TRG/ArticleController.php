@@ -35,6 +35,7 @@ class ArticleController extends Controller
     {
         $ateliers = Atelier::all();
 
+
         return view('TRG.articles.form', compact('ateliers'));
     }
 

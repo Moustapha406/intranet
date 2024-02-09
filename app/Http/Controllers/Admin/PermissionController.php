@@ -12,6 +12,13 @@ class PermissionController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware('permission:permi-read|permi-create|permi-edit|permi-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:permi-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:permi-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:permi-delete', ['only' => ['destroy']]);
+    }
     public function index()
     {
         $permissions = Permission::orderBy("id", "desc")->paginate(10);
@@ -33,7 +40,7 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+
         $request->validate([
             "name" => ["required"]
         ]);
@@ -71,9 +78,13 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+
         $data = $request->validate([
-            'name' => ['requered', 'string'],
+            'name' => ['required', 'string'],
         ]);
+
+
 
         $permission = Permission::findOrfail($id);
         $permission->update($data);

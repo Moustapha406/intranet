@@ -60,5 +60,6 @@ Route::prefix('trg')
         Route::resources(['article' => 'TRG\ArticleController']);
         Route::resources(['atelier' => 'TRG\AtelierController']);
         Route::resources(['production' => 'TRG\ProductionController']);
+        Route::get('/production/{atelier}/{date}/{usine}', [ProductionController::class, 'show'])->name('production.show');
         Route::get('/productions/{atelier}/{date}/{usine}', [ProductionController::class, 'edit'])->name('productions.edit');
     });

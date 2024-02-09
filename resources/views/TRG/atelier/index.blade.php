@@ -18,13 +18,13 @@
                   </div>
                   <div class="button text-right ml-4">
 
-                    @can('atelier-create')
+                    {{-- @can('atelier-create') --}}
                       <a href="{{route('atelier.create')}}" class="btn btn-icon icon-left btn-primary">
                       {{-- <i class="far fa-file-alt"></i> Ajouter --}}
                         <i class="fa fa-plus-square" aria-hidden="true"></i> Ajouter
 
                       </a>
-                    @endcan
+                    {{-- @endcan --}}
                     
                   </div>
                       

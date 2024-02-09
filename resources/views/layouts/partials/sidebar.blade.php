@@ -12,7 +12,7 @@
                 <li class="menu-header">Administration</li>
             @endcan
 
-            @can('admin-read')
+            {{-- @can('admin-read') --}}
                 <li class="dropdown">
                     <a href="#" class="menu-toggle nav-link has-dropdown">
                         <span class="material-symbols-outlined">groups</span><span>Parametrage</span>
@@ -25,7 +25,7 @@
                         
                     </ul>
                 </li>
-            @endcan
+            {{-- @endcan --}}
 
             {{-- <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown">

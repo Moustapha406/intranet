@@ -77,15 +77,15 @@
 
                                 <div class="form-group col-3">
                                     <label for="user">Responsable</label>
-                                    <select class="form-control select2"  name="user">
+                                    <select class="form-control select2" multiple="" name="users[]">
                                         <option value="">....</option>
-                                        {{-- @php
-                                            $selectedUsers= collect(old('user',isset($atelier) ? $atelier->users()->email : ''))
-                                        @endphp --}}
+                                        @php
+                                            $selectedUsers= collect(old('permission',isset($atelier) ? $atelier->users->pluck('id')->toArray() : []))
+                                        @endphp
 
                                         @foreach ($users as $user)
-                                            <option value="{{ $user->id }}" {{ isset($atelier->users->id) ? 'selected' : '' }} >
-                                                {{$user->prenom.' '.$user->nom}}
+                                            <option value="{{ $user->id }}" {{ $selectedUsers->contains($user->id) ? 'selected' : '' }} >
+                                                {{$user->email}}
                                             </option>
                                         @endforeach
                                     </select>

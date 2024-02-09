@@ -21,24 +21,34 @@ class ProductionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function __construct(){
-        $this->middleware('permission:prod-read|prod-create|prod-edit|prod-delete',['only'=> ['index','store']]);
-        $this->middleware('permission:prod-create',['only' => ['create','store']]);
-        $this->middleware('permission:prod-edit',['only' => ['edit','update']]);
-        $this->middleware('permission:prod-delete',['only' => ['destroy']]);
+    public function __construct()
+    {
+        $this->middleware('permission:prod-read|prod-create|prod-edit|prod-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:prod-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:prod-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:prod-delete', ['only' => ['destroy']]);
     }
     public function index(Request $request)
     {
 
-        
+
 
         $productions = ProductionJour::all();
 
         $productionX3s = ProductionX3::all();
 
 
-        $ateliers = Atelier::where('user_id',Auth()->user()->id)->with('articles.productionX3s')->get();
-        
+        $user = Auth()->user();
+
+        $ateliers = $user->ateliers()->with('articles.productionX3s')->get();
+
+
+
+
+        // $ateliers = Atelier::where('user_id', Auth()->user()->id)->with('articles.productionX3s')->get();
+
+
+
         $qtyProd = 0;
 
         foreach ($ateliers as $atelier) {
@@ -257,21 +267,12 @@ class ProductionController extends Controller
             'qtyProd' => ['required', 'min:1', 'numeric'],
             'nbreQuarts' => 'required'
         ]);
-
-
-
         $atelierSelected = Atelier::find($request->atelier_id);
-
-
 
 
         $dateProd = Carbon::createFromFormat('d/m/Y', $request->dateProd)->format('Y-m-d');
 
-
-
         $TRG = (($request->qtyProd * $atelierSelected->nbre_quart_default) / ($atelierSelected->cadenceJournaliere * $request->nbreQuarts)) * 100;
-
-
 
         $productionJour = ProductionJour::create([
             'qtyProd' => $request->qtyProd,
@@ -292,9 +293,37 @@ class ProductionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id, $date, $usine)
     {
-        //
+        $dates = Carbon::createFromFormat('d-m-Y', $date);
+
+        $dateSeach = $dates->format('Y-m-j');
+
+        $dates = $dates->format('d/m/Y');
+
+        $atelier = Atelier::find($id);
+
+        $atelierArticle = $atelier->articles->pluck('article');
+
+
+
+        $qty = ProductionX3::select('usine')
+            ->whereIn('article', $atelierArticle)
+            ->wheredate('DateProd', $dateSeach)
+            ->where('usine', $usine)
+            ->groupBy('usine')
+            ->sum('qty');
+
+
+
+        $productionJour = ProductionJour::wheredate('dateProd', $dateSeach)
+            ->where('atelier_id', $atelier->id)
+            ->where('usine', $usine)
+            ->first();
+
+        // dd($productionJour);
+
+        return view('TRG.productionJour.show', compact('atelier', 'dates', 'qty', 'productionJour', 'usine'));
     }
 
     /**
@@ -328,6 +357,8 @@ class ProductionController extends Controller
             ->where('atelier_id', $atelier->id)
             ->where('usine', $usine)
             ->first();
+
+
 
 
         // dd($productionJour->nbreQuarts);
