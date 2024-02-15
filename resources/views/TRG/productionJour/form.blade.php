@@ -74,7 +74,7 @@ input[type=number] {
 
                                 <div class="form-group col-2">
                                     <label for="nbreQuarts">Nombre de Quart</label>
-                                    <input id="nbreQuarts" type="number" class="form-control nbreQuart" name="nbreQuarts" value="{{isset($productionJour) ? $productionJour->nbreQuarts: old('nbreQuarts')}}" min="1" max="3">
+                                    <input id="nbreQuarts" type="number" class="form-control nbreQuart" name="nbreQuarts" value="{{isset($productionJour) ? $productionJour->nbreQuarts: old('nbreQuarts')}}" min="0" max="3">
                                     @error('nbreQuarts')
                                         <div class="text-danger">
                                             {{$message}}

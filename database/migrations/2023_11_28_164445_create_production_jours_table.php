@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('production_jours', function (Blueprint $table) {
             $table->id();
-            $table->decimal("qtyProd");
-            $table->integer("nbreQuarts");
+            $table->decimal("qtyProd")->nullable();
+            $table->integer("nbreQuarts")->nullable();
             $table->decimal("TRGjour")->nullable();
             $table->string("usine")->nullable();
             $table->string("observation")->nullable();

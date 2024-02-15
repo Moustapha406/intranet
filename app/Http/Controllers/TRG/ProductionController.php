@@ -264,15 +264,24 @@ class ProductionController extends Controller
 
 
         $request->validate([
-            'qtyProd' => ['required', 'min:1', 'numeric'],
-            'nbreQuarts' => 'required'
+            'qtyProd' => ['min:0', 'numeric'],
+            'nbreQuarts' => ['min:0']
         ]);
         $atelierSelected = Atelier::find($request->atelier_id);
 
 
+
         $dateProd = Carbon::createFromFormat('d/m/Y', $request->dateProd)->format('Y-m-d');
 
-        $TRG = (($request->qtyProd * $atelierSelected->nbre_quart_default) / ($atelierSelected->cadenceJournaliere * $request->nbreQuarts)) * 100;
+        if ($request->qtyProd > 0 || $request->nbreQuarts > 0) {
+
+            $TRG = (($request->qtyProd * $atelierSelected->nbre_quart_default) / ($atelierSelected->cadenceJournaliere * $request->nbreQuarts)) * 100;
+        } else {
+
+
+            $TRG = 0;
+        }
+
 
         $productionJour = ProductionJour::create([
             'qtyProd' => $request->qtyProd,
