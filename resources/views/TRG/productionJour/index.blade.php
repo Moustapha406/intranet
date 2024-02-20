@@ -81,6 +81,7 @@ input[type=number] {
               <div class="card card-primary">
                 <div class="card-header " >
                     <h4>TRG</h4>
+                    
                     <div class="card-header-form">
                         <form method="GET" action="{{route('production.index')}}">
                             @csrf
@@ -102,10 +103,27 @@ input[type=number] {
                                 <input type="month"  class="form-control "  id="dateFormated" name="date" placeholder="Search"> 
 
                                 <div class="input-group-btn">
+                            
                                     <button class="btn btn-primary">Rechercher  <i class="fas fa-search"></i></button>
                                 </div>
+
                             </div>
                         </form>
+                        
+                    </div>
+
+                    <div class="pl-5">
+                        <form method="POST" action="{{route('productions.export')}}">
+                            @csrf
+                            <input type="hidden" name="date" value="{{ isset($dateFormated) ? $dateFormated : '' }}">
+                            <input type="hidden" name="atelierSelect" value="{{ isset($atelierSelected->id ) ? $atelierSelected->id : ''}}">
+                            @isset($atelierSelected->id )
+                                <button type="submit" class="badge badge-primary">Exporter</button>
+                            @endisset
+                            
+                        </form>
+
+                        
                     </div>
 
                 </div>
@@ -145,9 +163,7 @@ input[type=number] {
                                     <span class="material-symbols-outlined">edit</span>
                                 </a>
                                 
-                                {{-- <a href="{{route('productionJour.show', $article->id)}}" data-toggle="modal" data-target="#article_{{$article->id}}" class="text-info">
-                                  <span class="material-symbols-outlined">edit</span>
-                                </a> --}}
+                                
                             </td>
                         </tr>
 

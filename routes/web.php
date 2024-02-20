@@ -62,4 +62,5 @@ Route::prefix('trg')
         Route::resources(['production' => 'TRG\ProductionController']);
         Route::get('/production/{atelier}/{date}/{usine}', [ProductionController::class, 'show'])->name('production.show');
         Route::get('/productions/{atelier}/{date}/{usine}', [ProductionController::class, 'edit'])->name('productions.edit');
+        Route::Post('/productions/export', [ProductionController::class, 'export'])->name('productions.export');
     });

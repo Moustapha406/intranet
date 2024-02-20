@@ -38,6 +38,7 @@ input[type=number] {
                                     <li class="list-group-item font-weight-bold">Nombre de quart</li>
                                     <li class="list-group-item font-weight-bold">TRG jour</li>
                                     <li class="list-group-item font-weight-bold">Objectif du TRG</li>
+                                    <li class="list-group-item font-weight-bold">Observation: </li>
                                 </ul>
                             </div>
                             <div class="col-md-6">
@@ -53,9 +54,11 @@ input[type=number] {
                                     
                                     <li class="list-group-item"> {{isset($productionJour->TRGjour) ? $productionJour->TRGjour : '0 %'}} </li>
                                     <li class="list-group-item"> {{$atelier->TRGObjectif}} </li>
-                                    
+                                    <li> {{isset($productionJour->observation) ? $productionJour->observation : ''}}</li>
                                 </ul>
                             </div>
+                        </div>
+                        <hr>
                         
                     </div>
                 </div>
