@@ -15,13 +15,13 @@ class RoleController extends Controller
      * Display a listing of the resource.
      */
 
-    public function  __construct()
-    {
-        $this->middleware('permission:role-read|role-create|role-edit|role-delete', ['only' => ['index', 'store']]);
-        $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
-    }
+    // public function  __construct()
+    // {
+    //     $this->middleware('permission:role-read|role-create|role-edit|role-delete', ['only' => ['index', 'store']]);
+    //     $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
+    //     $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
+    //     $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+    // }
     public function index(Request $request)
     {
         $roles = Role::orderBy('id', 'DESC')->paginate(10);

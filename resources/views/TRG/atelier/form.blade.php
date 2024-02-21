@@ -23,7 +23,7 @@
                         </div>
                         <div class="card-body p-4 ">
                             <div class="row">
-                                <div class="form-group col-4">
+                                <div class="form-group col-3">
                                     <label for="code">code</label>
                                     <input id="code" type="text" class="form-control" name="code" value="{{isset($atelier) ? $atelier->code : ''}}" {{ isset($atelier) ? 'disabled' : '' }} autofocus>
                                 </div>
@@ -31,9 +31,18 @@
                                     <label for="libelle">Nom d'atelier</label>
                                     <input id="libelle" type="text" class="form-control" name="libelle" value="{{isset($atelier) ? $atelier->libelle : ''}}" {{ isset($atelier) ? 'disabled' : '' }}>
                                 </div>
-                                <div class="form-group col-4">
+                                <div class="form-group col-3">
                                     <label for="usine">Usine</label>
                                     <input id="usine" type="text" class="form-control" name="usine" value="{{isset($atelier) ? $atelier->usine : ''}}" >
+                                </div>
+                                <div class="form-group col-2">
+                                    <label for="usine">Unité</label>
+                                    <select class="form-control select2" name="unite">
+                                        <option></option>
+                                        <option value="Cartons" {{isset($atelier) && $atelier->unite=="Cartons" ? 'selected' : ''}}>Cartons</option>
+                                        <option value="Kg" {{isset($atelier) && $atelier->unite=="Kg" ? 'selected' : ''}}>Kg</option>
+                                        <option value="Tonnes" {{isset($atelier) && $atelier->unite=="Tonnes" ? 'selected' : ''}}>Tonnes</option>
+                                    </select>
                                 </div>
 
                             </div>

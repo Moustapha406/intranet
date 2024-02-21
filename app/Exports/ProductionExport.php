@@ -42,16 +42,7 @@ class ProductionExport implements FromCollection, WithMapping, WithHeadings
         ];
     }
 
-    // public function prepareRows($rows)
-    // {
-    //     // dd($rows);
 
-    //     return $rows->transform(function ($data) {
-    //         $data->trg .= ' (prepared)';
-
-    //         return $data;
-    //     });
-    // }
 
     public function map($rows): array
     {

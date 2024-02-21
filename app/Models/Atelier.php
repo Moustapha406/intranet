@@ -20,7 +20,8 @@ class Atelier extends Model
         'nbre_ligne',
         'nbre_heure',
         'TRGObjectif',
-        'user_id'
+        'user_id',
+        'unite'
     ];
 
     public function articles()

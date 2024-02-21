@@ -25,6 +25,8 @@ class AtelierController extends Controller
     {
         $ateliers = Atelier::orderBy('libelle', 'desc')->paginate(10);
 
+
+
         return view('TRG.atelier.index', compact('ateliers'));
     }
 
@@ -52,7 +54,8 @@ class AtelierController extends Controller
             'nbre_quart_default' => ['required'],
             'nbre_ligne' => ['required'],
             'nbre_heure' => ['required'],
-            'TRGObjectif' => ''
+            'TRGObjectif' => '',
+            'unite' => ['required', 'string']
         ]);
 
         $atelier = Atelier::create([
@@ -64,7 +67,8 @@ class AtelierController extends Controller
             'nbre_quart_default' => $request->nbre_quart_default,
             'nbre_ligne' => $request->nbre_ligne,
             'nbre_heure' => $request->nbre_heure,
-            'TRGObjectif' => $request->TRGObjectif
+            'TRGObjectif' => $request->TRGObjectif,
+            'unite' => $request->unite
         ]);
 
         $atelier->users()->attach($request->input('users', []));
@@ -99,6 +103,8 @@ class AtelierController extends Controller
     public function edit(Atelier $atelier)
     {
         $users = User::all();
+
+
 
         return view('TRG.atelier.form', compact('atelier', 'users'));
     }
@@ -151,7 +157,8 @@ class AtelierController extends Controller
             'nbre_quart_default' => ['required'],
             'nbre_ligne' => ['required'],
             'nbre_heure' => ['required'],
-            'TRGObjectif' => ''
+            'TRGObjectif' => '',
+            'unite' => ['required', 'string']
         ]);
 
         // dd($request);

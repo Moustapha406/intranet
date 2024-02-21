@@ -98,6 +98,7 @@ class ProductionController extends Controller
             $atelierArticle = $atelierSelected->articles->pluck('article');
             $nbreQuart = null;
 
+            //dd($atelierArticle);
 
             $dateProd = ProductionX3::select('DateProd')
                 ->whereYear('DateProd', $annee)
@@ -134,21 +135,52 @@ class ProductionController extends Controller
                     ->wheredate('DateProd', $dateSearch)
                     ->get();
 
-
-                $productionForUsine = ProductionX3::select('usine', DB::raw('MAX(DateProd) as DateProd'), DB::raw('SUM(qty) as totalQty'))
-                    ->whereIn('article', $atelierArticle)
-                    ->whereDate('DateProd', $dateSearch)
-                    ->groupBy('usine')
-                    ->get();
-
-
+                if ($atelierSelected->unite == 'Kg') {
+                    $productionForUsine = ProductionX3::select(
+                        'usine',
+                        DB::raw('MAX(DateProd) as DateProd'),
+                        DB::raw('SUM(qty*poids) as totalQty')
+                    )
+                        ->whereIn('article', $atelierArticle)
+                        ->whereDate('DateProd', $dateSearch)
+                        ->groupBy('usine')
+                        ->get();
+                } elseif ($atelierSelected->unite == 'Tonnes') {
+                    $productionForUsine = ProductionX3::select(
+                        'usine',
+                        DB::raw('MAX(DateProd) as DateProd'),
+                        DB::raw('SUM(qty*poids/1000) as totalQty')
+                    )
+                        ->whereIn('article', $atelierArticle)
+                        ->whereDate('DateProd', $dateSearch)
+                        ->groupBy('usine')
+                        ->get();
+                } elseif ($atelierSelected->unite == 'Litres') {
+                    $productionForUsine = ProductionX3::select(
+                        'usine',
+                        DB::raw('MAX(DateProd) as DateProd'),
+                        DB::raw('SUM(qty*poids) as totalQty')
+                    )
+                        ->whereIn('article', $atelierArticle)
+                        ->whereDate('DateProd', $dateSearch)
+                        ->groupBy('usine')
+                        ->get();
+                } else {
+                    $productionForUsine = ProductionX3::select(
+                        'usine',
+                        DB::raw('MAX(DateProd) as DateProd'),
+                        DB::raw('SUM(qty) as totalQty')
+                    )
+                        ->whereIn('article', $atelierArticle)
+                        ->whereDate('DateProd', $dateSearch)
+                        ->groupBy('usine')
+                        ->get();
+                }
 
 
                 $ligne = ProductionJour::wheredate('dateProd', $dateSearch)
                     ->where('atelier_id', $atelierSelected->id)
                     ->first();
-
-
 
 
                 if ($ligne == null) {
@@ -182,7 +214,6 @@ class ProductionController extends Controller
                             $TRG = 0;
                         } else {
                             $jourProd += 1;
-
                             $TRG = $l->TRGjour;
                             $cumulTRG += $TRG;
                         }
@@ -205,7 +236,6 @@ class ProductionController extends Controller
                 $moyenne = $cumulTRG / $jourProd;
             }
         }
-
 
 
 
@@ -246,6 +276,7 @@ class ProductionController extends Controller
             $atelierSelected = Atelier::findOrFail($request->atelierSelect);
 
             $atelierArticle = $atelierSelected->articles->pluck('article');
+
             $nbreQuart = null;
 
 
@@ -271,7 +302,6 @@ class ProductionController extends Controller
 
 
                 // $date = $dateProd[$jour];
-
                 //$date = Carbon::createFromFormat('j-m-Y', "$jour-$mois-$annee");
                 $dateSearch = Carbon::create($annee, $mois, $jour)->format('Y-m-d');
 
@@ -287,13 +317,53 @@ class ProductionController extends Controller
                     ->get();
 
 
-                $productionForUsine = ProductionX3::select('usine', DB::raw('MAX(DateProd) as DateProd'), DB::raw('SUM(qty) as totalQty'))
-                    ->whereIn('article', $atelierArticle)
-                    ->whereDate('DateProd', $dateSearch)
-                    ->groupBy('usine')
-                    ->get();
+                // $productionForUsine = ProductionX3::select('usine', DB::raw('MAX(DateProd) as DateProd'), DB::raw('SUM(qty) as totalQty'))
+                //     ->whereIn('article', $atelierArticle)
+                //     ->whereDate('DateProd', $dateSearch)
+                //     ->groupBy('usine')
+                //     ->get();
 
-
+                if ($atelierSelected->unite == 'Kg') {
+                    $productionForUsine = ProductionX3::select(
+                        'usine',
+                        DB::raw('MAX(DateProd) as DateProd'),
+                        DB::raw('SUM(qty*poids) as totalQty')
+                    )
+                        ->whereIn('article', $atelierArticle)
+                        ->whereDate('DateProd', $dateSearch)
+                        ->groupBy('usine')
+                        ->get();
+                } elseif ($atelierSelected->unite == 'Tonnes') {
+                    $productionForUsine = ProductionX3::select(
+                        'usine',
+                        DB::raw('MAX(DateProd) as DateProd'),
+                        DB::raw('SUM(qty*poids/1000) as totalQty')
+                    )
+                        ->whereIn('article', $atelierArticle)
+                        ->whereDate('DateProd', $dateSearch)
+                        ->groupBy('usine')
+                        ->get();
+                } elseif ($atelierSelected->unite == 'Litres') {
+                    $productionForUsine = ProductionX3::select(
+                        'usine',
+                        DB::raw('MAX(DateProd) as DateProd'),
+                        DB::raw('SUM(qty*poids) as totalQty')
+                    )
+                        ->whereIn('article', $atelierArticle)
+                        ->whereDate('DateProd', $dateSearch)
+                        ->groupBy('usine')
+                        ->get();
+                } else {
+                    $productionForUsine = ProductionX3::select(
+                        'usine',
+                        DB::raw('MAX(DateProd) as DateProd'),
+                        DB::raw('SUM(qty) as totalQty')
+                    )
+                        ->whereIn('article', $atelierArticle)
+                        ->whereDate('DateProd', $dateSearch)
+                        ->groupBy('usine')
+                        ->get();
+                }
 
 
                 $ligne = ProductionJour::wheredate('dateProd', $dateSearch)
@@ -396,15 +466,12 @@ class ProductionController extends Controller
         ]);
         $atelierSelected = Atelier::find($request->atelier_id);
 
-
-
         $dateProd = Carbon::createFromFormat('d/m/Y', $request->dateProd)->format('Y-m-d');
 
         if ($request->qtyProd > 0 || $request->nbreQuarts > 0) {
 
             $TRG = (($request->qtyProd * $atelierSelected->nbre_quart_default) / ($atelierSelected->cadenceJournaliere * $request->nbreQuarts)) * 100;
         } else {
-
 
             $TRG = 0;
         }

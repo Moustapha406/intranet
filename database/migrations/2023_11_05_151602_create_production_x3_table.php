@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('qty')->nallable();
             $table->string('unite');
             $table->string('usine')->nullable();
+            $table->decimal('poids')->nullable();
             $table->date('DateProd')->nullable();
             $table->timestamps();
         });

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string("marque");
             $table->string("saveur");
             $table->string("unite")->nullable();
+            $table->decimal("poids")->nullable();
             $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger("atelier_id")->nullable();
             $table->foreign("atelier_id")->references("id")->on("ateliers");

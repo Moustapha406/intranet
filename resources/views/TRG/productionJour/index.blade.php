@@ -149,7 +149,7 @@ input[type=number] {
                             @endphp
                             <td> {{ $production['dateFormated'] }} </td>
                             <td> {{ $production['atelier'] }} </td>
-                            <td> {{ $production['quantite'] }} </td>
+                            <td> {{ $production['quantite'] > 0 ? number_format($production['quantite'],3) : $production['quantite'] }} </td>
                             <td> {{ $production['TRG'] }} %</td>
                             <td> {{$production['cadenceJournaliere']}} </td>
                             <td> {{$production['NbreQuartDefault']}} </td>
