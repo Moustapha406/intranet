@@ -464,13 +464,21 @@ class ProductionController extends Controller
             'qtyProd' => ['min:0', 'numeric'],
             'nbreQuarts' => ['min:0']
         ]);
+
         $atelierSelected = Atelier::find($request->atelier_id);
 
         $dateProd = Carbon::createFromFormat('d/m/Y', $request->dateProd)->format('Y-m-d');
 
-        if ($request->qtyProd > 0 || $request->nbreQuarts > 0) {
+        if ($request->qtyProd > 0) {
 
-            $TRG = (($request->qtyProd * $atelierSelected->nbre_quart_default) / ($atelierSelected->cadenceJournaliere * $request->nbreQuarts)) * 100;
+
+
+            if ($request->nbreQuarts > 0) {
+
+                $TRG = (($request->qtyProd * $atelierSelected->nbre_quart_default) / ($atelierSelected->cadenceJournaliere * $atelierSelected->nbreQuarts)) * 100;
+            }
+
+            $TRG = (($request->qtyProd * $atelierSelected->nbre_quart_default) / ($atelierSelected->cadenceJournaliere * $request->nbre_quart_default)) * 100;
         } else {
 
             $TRG = 0;
@@ -507,15 +515,54 @@ class ProductionController extends Controller
         $atelier = Atelier::find($id);
 
         $atelierArticle = $atelier->articles->pluck('article');
+        $production = null;
 
 
 
-        $qty = ProductionX3::select('usine')
-            ->whereIn('article', $atelierArticle)
-            ->wheredate('DateProd', $dateSeach)
-            ->where('usine', $usine)
-            ->groupBy('usine')
-            ->sum('qty');
+
+        if ($atelier->unite == 'Kg') {
+            $production = ProductionX3::select(
+                'usine',
+                DB::raw('SUM(qty*poids) as totalQty')
+            )
+                ->whereIn('article', $atelierArticle)
+                ->whereDate('DateProd', $dateSeach)
+                ->where('usine', $usine)
+                ->groupBy('usine')
+                ->first();
+        } elseif ($atelier->unite == 'Tonnes') {
+            $production = ProductionX3::select(
+                'usine',
+                DB::raw('SUM(qty*poids/1000) as totalQty')
+            )
+                ->whereIn('article', $atelierArticle)
+                ->whereDate('DateProd', $dateSeach)
+                ->where('usine', $usine)
+                ->groupBy('usine')
+                ->first();
+        } elseif ($atelier->unite == 'Cartons') {
+            $production = ProductionX3::select(
+                'usine',
+                DB::raw('SUM(qty) as totalQty')
+            )
+                ->whereIn('article', $atelierArticle)
+                ->whereDate('DateProd', $dateSeach)
+                ->where('usine', $usine)
+                ->groupBy('usine')
+                ->first();
+        } else {
+            $production = ProductionX3::select(
+                'usine',
+                DB::raw('SUM(qty) as totalQty')
+            )
+                ->whereIn('article', $atelierArticle)
+                ->whereDate('DateProd', $dateSeach)
+                ->where('usine', $usine)
+                ->groupBy('usine')
+                ->first();
+        }
+
+
 
 
 
@@ -526,7 +573,7 @@ class ProductionController extends Controller
 
         // dd($productionJour);
 
-        return view('TRG.productionJour.show', compact('atelier', 'dates', 'qty', 'productionJour', 'usine'));
+        return view('TRG.productionJour.show', compact('atelier', 'dates', 'production', 'productionJour', 'usine'));
     }
 
     /**
@@ -545,15 +592,59 @@ class ProductionController extends Controller
 
         $atelierArticle = $atelier->articles->pluck('article');
 
+        $production = null;
 
 
-        $qty = ProductionX3::select('usine')
-            ->whereIn('article', $atelierArticle)
-            ->wheredate('DateProd', $dateSeach)
-            ->where('usine', $usine)
-            ->groupBy('usine')
-            ->sum('qty');
 
+        // $qty = ProductionX3::select('usine')
+        //     ->whereIn('article', $atelierArticle)
+        //     ->wheredate('DateProd', $dateSeach)
+        //     ->where('usine', $usine)
+        //     ->groupBy('usine')
+        //     ->sum('qty*poids');
+
+
+        if ($atelier->unite == 'Kg') {
+            $production = ProductionX3::select(
+                'usine',
+                DB::raw('SUM(qty*poids) as totalQty')
+            )
+                ->whereIn('article', $atelierArticle)
+                ->whereDate('DateProd', $dateSeach)
+                ->where('usine', $usine)
+                ->groupBy('usine')
+                ->first();
+        } elseif ($atelier->unite == 'Tonnes') {
+            $production = ProductionX3::select(
+                'usine',
+                DB::raw('SUM(qty*poids/1000) as totalQty')
+            )
+                ->whereIn('article', $atelierArticle)
+                ->whereDate('DateProd', $dateSeach)
+                ->where('usine', $usine)
+                ->groupBy('usine')
+                ->first();
+        } elseif ($atelier->unite == 'Cartons') {
+            $production = ProductionX3::select(
+                'usine',
+                DB::raw('SUM(qty) as totalQty')
+            )
+                ->whereIn('article', $atelierArticle)
+                ->whereDate('DateProd', $dateSeach)
+                ->where('usine', $usine)
+                ->groupBy('usine')
+                ->first();
+        } else {
+            $production = ProductionX3::select(
+                'usine',
+                DB::raw('SUM(qty) as totalQty')
+            )
+                ->whereIn('article', $atelierArticle)
+                ->whereDate('DateProd', $dateSeach)
+                ->where('usine', $usine)
+                ->groupBy('usine')
+                ->first();
+        }
 
 
         $productionJour = ProductionJour::wheredate('dateProd', $dateSeach)
@@ -566,7 +657,7 @@ class ProductionController extends Controller
 
         // dd($productionJour->nbreQuarts);
 
-        return view('TRG.productionJour.form', compact('atelier', 'dates', 'qty', 'productionJour', 'usine'));
+        return view('TRG.productionJour.form', compact('atelier', 'dates', 'production', 'productionJour', 'usine'));
     }
 
     /**

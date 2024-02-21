@@ -46,7 +46,7 @@ input[type=number] {
                                 </div>
                                 <div class="form-group col-4">
                                     <label for="qtyProd">Quantité de la production</label>
-                                    <input id="qtyProd" type="number" class="form-control" name="qtyProd" value="{{ $qty }}" readonly>
+                                    <input id="qtyProd" type="number" class="form-control" name="qtyProd" value="{{ isset($production->totalQty) ? $production->totalQty : 0 }}" readonly>
                                     
                                         @error('qtyProd')
                                             <div class="text-danger" >

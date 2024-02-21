@@ -67,6 +67,10 @@
                                   </a>
                                 @endcan
 
+                                <a href="{{route('atelier.show', $atelier->id)}}" data-toggle="modal" data-target="#atelier_{{$atelier->id}}" class="text-info">
+                                  <span class="material-symbols-outlined">info</span>
+                                </a>
+
                                 @can('atelier-delete')
                                   <a href="#" class="text-danger" onClick="deleteConfirmation('atelier',{{$atelier->id}})">
                                     <span class="material-symbols-outlined">delete</span>
@@ -78,9 +82,7 @@
                                 </form>
                             </td>
 
-                            {{-- @includeIf('admin.users.show') --}}
-
-                            
+                            @includeIf('trg.atelier.show')
 
                         </tr>
                     @endforeach

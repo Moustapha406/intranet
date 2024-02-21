@@ -7,8 +7,9 @@
                 <div class="card-header d-flex justify-content-between">
                     <h4>Liste des rôles</h4>
                     <div class="button text-right ml-4">
-                        <a href="{{route('roles.create')}}"  >
-                            <span class="material-symbols-outlined mt-2">person_add</span>
+                        
+                        <a href="{{route('roles.create')}}" class="btn btn-icon icon-left btn-primary">
+                            <i class="fa fa-plus-square" aria-hidden="true"></i> Ajouter
                         </a>
                     </div> 
                 </div>

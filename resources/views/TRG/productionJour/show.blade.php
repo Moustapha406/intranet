@@ -61,6 +61,10 @@ input[type=number] {
                         <hr>
                         
                     </div>
+
+                    <div class="card-footer text-right">
+                        <a href="{{url()->previous()}}" class="btn btn-secondary">Retour</a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
-<div class="modal fade" id="article_{{$article->id}}" tabindex="-1" role="dialog"
+<div class="modal fade bd-example-modal-lg" id="article_{{$article->id}}" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
             <h5 class="modal-title" id="exampleModalCenterTitle">Détail</h5>
@@ -27,7 +27,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">{{$article->article}}</li>
                             <li class="list-group-item">{{$article->designation}}</li>
-                            <li class="list-group-item">{{$article->categorie}}</li>
+                            <li class="list-group-item">{{$article->category}}</li>
                             <li class="list-group-item"> {{$article->marque}} </li>
                             <li class="list-group-item"> {{$article->saveur}} </li>
                             <li class="list-group-item">

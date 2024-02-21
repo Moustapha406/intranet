@@ -17,9 +17,12 @@
                     </form>
                   </div>
                   <div class="button text-right ml-4">
-                    <a href="{{route('article.create')}}">
-                        <span class="material-symbols-outlined mt-2">person_add</span>
+                    
+
+                    <a href="{{route('article.create')}}" class="btn btn-icon icon-left btn-primary">
+                        <i class="fa fa-plus-square" aria-hidden="true"></i> Ajouter
                     </a>
+                    
                   </div>    
                 </div>
                 <div class="card-body p-0">
@@ -32,6 +35,7 @@
                             <th>Marque</th>
                             <th>Saveur</th>
                             <th>Atelier</th>
+                            <th>Statut</th>
                             <th class="text-center">Action</th>
                         </tr>
                     @foreach ($articles as $article)
@@ -42,13 +46,13 @@
                             <td>{{$article->marque}}</td>
                             <td>{{$article->saveur}}</td>
                             <td>{{isset($article->atelier->libelle) ? $article->atelier->libelle : ''}}</td>
-                            {{-- <td>
+                            <td>
                                 @if ($article->is_active==true)
                                     <div class="badge badge-success">Activé</div>
                                 @else
                                     <div class="badge badge-danger">Desactivé</div>
                                 @endif
-                            </td> --}}
+                            </td>
                             
                             <td class="text-center">
                                 @can('atelier-edit')
