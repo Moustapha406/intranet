@@ -469,16 +469,17 @@ class ProductionController extends Controller
 
         $dateProd = Carbon::createFromFormat('d/m/Y', $request->dateProd)->format('Y-m-d');
 
+
         if ($request->qtyProd > 0) {
 
 
 
             if ($request->nbreQuarts > 0) {
 
-                $TRG = (($request->qtyProd * $atelierSelected->nbre_quart_default) / ($atelierSelected->cadenceJournaliere * $atelierSelected->nbreQuarts)) * 100;
+                $TRG = (($request->qtyProd * $atelierSelected->nbre_quart_default) / ($atelierSelected->cadenceJournaliere * $request->nbreQuarts)) * 100;
             }
 
-            $TRG = (($request->qtyProd * $atelierSelected->nbre_quart_default) / ($atelierSelected->cadenceJournaliere * $request->nbre_quart_default)) * 100;
+            $TRG = (($request->qtyProd * $atelierSelected->nbre_quart_default) / ($atelierSelected->cadenceJournaliere * $atelierSelected->nbre_quart_default)) * 100;
         } else {
 
             $TRG = 0;
