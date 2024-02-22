@@ -88,7 +88,9 @@ class AtelierController extends Controller
 
     public function affecter($atelier)
     {
-        $articles = Article::whereNull('atelier_id')->get();
+        $articles = Article::whereNull('atelier_id')
+            ->where('is_active', true)
+            ->get();
 
         $atelier = Atelier::find($atelier);
 
@@ -103,8 +105,6 @@ class AtelierController extends Controller
     public function edit(Atelier $atelier)
     {
         $users = User::all();
-
-
 
         return view('TRG.atelier.form', compact('atelier', 'users'));
     }
