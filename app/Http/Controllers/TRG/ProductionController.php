@@ -74,6 +74,7 @@ class ProductionController extends Controller
         $cumulTRG = 0;
         $jourProd = 0;
         $moyenne = 0;
+        $observation='';
 
 
         if ($request->date && $request->atelier) {
@@ -116,7 +117,7 @@ class ProductionController extends Controller
             $nombreDeJours = $dateSelect->daysInMonth;
 
 
-            for ($jour = 1; $jour <= $nombreDeJours; $jour++) {
+            for ($jour =1 ; $jour <= $nombreDeJours; $jour++) {
 
 
                 // $date = $dateProd[$jour];
@@ -182,17 +183,29 @@ class ProductionController extends Controller
                     ->where('atelier_id', $atelierSelected->id)
                     ->first();
 
+                // $prod = ProductionJour::wheredate('dateProd', $dateSearch)
+                //     ->where('atelier_id', $atelierSelected->id)
+                //     ->where('usine',$atelierSelected->usine)
+                //     ->first();
+
+                 //dd($ligne);
+
+                
+
 
                 if ($ligne == null) {
                     $TRG = 0;
                 } else {
                     // $jourProd += 1;
+                    
+                    
                     $TRG = $ligne->TRGjour;
                 }
                 $productionForDate = [];
 
                 if ($productionForUsine->isEmpty()) {
                     //dd(!$productionJours->isEmpty());
+                    //dd($observation);
                     $jourDuMois[] = [
                         'dateFormated' =>  date('d/m/Y', strtotime($dateSearch)),
                         'quantite' => 0,
@@ -213,7 +226,7 @@ class ProductionController extends Controller
                             ->first();
                         $nbreQuarts = 0;
 
-
+                        //dd($production->usine);
 
                         if ($l == null) {
                             $TRG = 0;
