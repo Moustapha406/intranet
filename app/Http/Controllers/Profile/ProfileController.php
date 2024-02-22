@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -16,6 +17,9 @@ class ProfileController extends Controller
      */
     public function index()
     {
+        $user = Auth()->user();
+
+        return view('profile.index', compact('user'));
     }
 
     /**
@@ -29,10 +33,26 @@ class ProfileController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
-        //
     }
+
+
+    public function updatePassword(Request $request)
+    {
+
+        $data = $request->validate([
+            'password' => ['required', 'confirmed']
+        ]);
+
+        $request->user()->update([
+            'password' => Hash::make($data['password'])
+        ]);
+
+        return redirect()->route('profile.index')->with('success', 'Le mot de passe est bien modifier');
+    }
+
 
     /**
      * Display the specified resource.

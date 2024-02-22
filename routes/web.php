@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\TRG\AtelierController;
 use App\Http\Controllers\TRG\ProductionController;
 use Illuminate\Support\Facades\Route;
@@ -25,11 +25,12 @@ Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('/');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
+
 
 require __DIR__ . '/auth.php';
 
@@ -38,7 +39,10 @@ Route::middleware('auth')
     ->group(function () {
 
         Route::resources(['profile' => 'Profile\ProfileController']);
+        Route::put('/profile', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
     });
+
+
 
 
 Route::prefix('admin')
