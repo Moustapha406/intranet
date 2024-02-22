@@ -195,7 +195,6 @@ input[type=number] {
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th>  </th>
                         <th> {{number_format($moyenne,2,',',' ')}} %</th>
                         <th></th>
                     </tr>
