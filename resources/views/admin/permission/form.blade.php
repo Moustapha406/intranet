@@ -20,6 +20,11 @@
                                 <div class="form-group col-8 offset-2">
                                     <label for="name">Permission</label>
                                     <input id="name" type="text" class="form-control" name="name" value="{{isset($permission) ? $permission->name : ''}}" >
+                                        @error('name')
+                                            <div class="text-danger" >
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                 </div>
                                 {{-- <div class="form-group col-7">
                                     <label for="prenom">Roles</label>

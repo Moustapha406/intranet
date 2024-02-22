@@ -135,9 +135,9 @@ input[type=number] {
                             <th>Date</th>
                             <th>Atelier</th>
                             <th>Quantité</th>
-                            <th>TRG</th>
-                            <th>CadenceJournaliere</th>
-                            <th>NbreQuartDefault</th>
+                            <th>Nb Quarts</th>
+                            <th>TRG en %</th>
+                            <th>Observation</th>
                             <th class="text-center">Action</th>
                         </tr>
                     @foreach ($jourDuMois as  $production)
@@ -150,9 +150,9 @@ input[type=number] {
                             <td> {{ $production['dateFormated'] }} </td>
                             <td> {{ $production['atelier'] }} </td>
                             <td> {{ $production['quantite'] > 0 ? number_format($production['quantite'],3,',',' ') : $production['quantite'] }} </td>
+                            <td> {{ $production['nbreQuarts'] }}</td>
                             <td> {{ $production['TRG'] }} %</td>
-                            <td> {{number_format($production['cadenceJournaliere'],2,',',' ')}} </td>
-                            <td> {{$production['NbreQuartDefault']}} </td>
+                            <td> {{ $production['observation'] !='' ? substr($production['observation'],0,20).' ...' : '' }}</td>
                             <td class="text-center">
                                 @can('prod-edit')
                                     <a href="{{route('productions.edit',['atelier'=>$id_atelier,'date'=>$dateString,'usine'=>$production['usine'] ])}}" class="test-info">

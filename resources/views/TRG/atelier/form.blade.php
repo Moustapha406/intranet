@@ -26,14 +26,29 @@
                                 <div class="form-group col-3">
                                     <label for="code">code</label>
                                     <input id="code" type="text" class="form-control" name="code" value="{{isset($atelier) ? $atelier->code : ''}}" {{ isset($atelier) ? 'disabled' : '' }} autofocus>
+                                        @error('code')
+                                            <div class="text-danger" >
+                                                le code est obligatoire
+                                            </div>
+                                        @enderror
                                 </div>
                                 <div class="form-group col-4">
                                     <label for="libelle">Nom d'atelier</label>
                                     <input id="libelle" type="text" class="form-control" name="libelle" value="{{isset($atelier) ? $atelier->libelle : ''}}" {{ isset($atelier) ? 'disabled' : '' }}>
+                                        @error('libelle')
+                                            <div class="text-danger" >
+                                                le nom de l'atelier est obligatoire
+                                            </div>
+                                        @enderror
                                 </div>
                                 <div class="form-group col-3">
                                     <label for="usine">Usine</label>
                                     <input id="usine" type="text" class="form-control" name="usine" value="{{isset($atelier) ? $atelier->usine : ''}}" >
+                                        @error('usine')
+                                            <div class="text-danger" >
+                                                l'usine est obligatoire
+                                            </div>
+                                        @enderror
                                 </div>
                                 <div class="form-group col-2">
                                     <label for="usine">Unité</label>
@@ -52,16 +67,31 @@
                                 <div class="form-group col-4">
                                     <label for="cadenceLigne">Cadence de ligne</label>
                                     <input id="cadenceLigne" type="number" class="form-control" name="cadenceLigne" value="{{isset($atelier) ? $atelier->cadenceLigne : ''}}" >
+                                        @error('cadenceLigne')
+                                            <div class="text-danger" >
+                                                la cadence est obligatoire
+                                            </div>
+                                        @enderror
                                 </div>
 
                                 <div class="form-group col-4">
                                     <label for="cadenceJournaliere">Cadence journaliére</label>
                                     <input id="cadenceJournaliere" type="number" class="form-control" name="cadenceJournaliere" value="{{isset($atelier) ? $atelier->cadenceJournaliere : ''}}" autofocus>
+                                        @error('cadenceJournaliere')
+                                            <div class="text-danger" >
+                                                la cadence journaliére est obligatoire
+                                            </div>
+                                        @enderror
                                 </div>
                                 
                                 <div class="form-group col-4">
                                     <label for="nbre_quart_default">Nombre de quart par default</label>
                                     <input id="nbre_quart_default" type="number" class="form-control" name="nbre_quart_default" value="{{isset($atelier) ? $atelier->nbre_quart_default : ''}}" >
+                                        @error('nbre_quart_default')
+                                            <div class="text-danger" >
+                                                le nbre de quarts par default est obligatoire
+                                            </div>
+                                        @enderror
                                 </div>
 
                             </div>
@@ -72,16 +102,31 @@
                                 <div class="form-group col-3">
                                     <label for="nbre_heure">Nombre d'heures</label>
                                     <input id="nbre_heure" type="number" class="form-control" name="nbre_heure" value="{{isset($atelier) ? $atelier->nbre_heure : ''}}" >
+                                        @error('nbre_heure')
+                                            <div class="text-danger" >
+                                                le nbre d'heure est obligatoire
+                                            </div>
+                                        @enderror
                                 </div>
 
                                 <div class="form-group col-3">
                                     <label for="nbre_ligne">Nombre de ligne</label>
                                     <input id="nbre_ligne" type="number" class="form-control" name="nbre_ligne" value="{{isset($atelier) ? $atelier->nbre_ligne : ''}}" >
+                                        @error('nbre_ligne')
+                                            <div class="text-danger" >
+                                                le nbre de ligne est obligatoire
+                                            </div>
+                                        @enderror
                                 </div>
 
                                 <div class="form-group col-3">
                                     <label for="TRGObjectif">Objectif du TRG</label>
                                     <input id="TRGObjectif" type="number" class="form-control" name="TRGObjectif" value="{{isset($atelier) ? $atelier->TRGObjectif: ''}}" >
+                                        @error('TRGObjectif')
+                                            <div class="text-danger" >
+                                                l'objectif du TRG est obligatoire
+                                            </div>
+                                        @enderror
                                 </div>
 
                                 <div class="form-group col-3">

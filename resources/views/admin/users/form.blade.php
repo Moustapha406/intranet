@@ -19,10 +19,20 @@
                                 <div class="form-group col-6">
                                     <label for="nom">Nom</label>
                                     <input id="nom" type="text" class="form-control" name="nom" value="{{isset($user) ? $user->nom : ''}}" autofocus>
+                                        @error('nom')
+                                            <div class="text-danger" >
+                                                le nom est obligatoire
+                                            </div>
+                                        @enderror
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="prenom">Prénom</label>
                                     <input id="prenom" type="text" class="form-control" name="prenom" value="{{isset($user) ? $user->prenom : ''}}" >
+                                        @error('prenom')
+                                            <div class="text-danger" >
+                                                le prénom est obligatoire
+                                            </div>
+                                        @enderror
                                 </div>
                             </div>
                             <div class="row">
@@ -87,14 +97,29 @@
                                 <div class="form-group col-4">
                                     <label for="site">Site</label>
                                     <input id="site" type="text" class="form-control" name="site" value="{{isset($user) ? $user->site : ''}}" >
+                                        @error('site')
+                                            <div class="text-danger" >
+                                                le site est obligatoire
+                                            </div>
+                                        @enderror
                                 </div>
                                 <div class="form-group col-4">
                                     <label for="departement">Département</label>
                                     <input id="departement" type="text" class="form-control" name="departement" value="{{isset($user) ? $user->departement : ''}}" autofocus>
+                                        @error('departement')
+                                            <div class="text-danger" >
+                                                le departement est obligatoire
+                                            </div>
+                                        @enderror
                                 </div>
                                 <div class="form-group col-4">
                                     <label for="fonction">Fonction</label>
                                     <input id="fonction" type="text" class="form-control" name="fonction" value="{{isset($user) ? $user->fonction : ''}}" autofocus>
+                                        @error('fonction')
+                                            <div class="text-danger" >
+                                                le fonction est obligatoire
+                                            </div>
+                                        @enderror
                                 </div>
                             </div>
 
@@ -103,10 +128,20 @@
                                 <div class="form-group col-6">
                                     <label for="email">Email</label>
                                     <input id="email" type="mail" class="form-control" value="{{ isset($user) ? $user->email : ''}}" name="email" autofocus>
+                                        @error('email')
+                                            <div class="text-danger" >
+                                                l'email est obligatoire
+                                            </div>
+                                        @enderror
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="password">Mot de passe</label>
                                     <input id="password" type="password"  class="form-control" name="password"  >
+                                        @error('password')
+                                            <div class="text-danger" >
+                                                le password est obligatoire
+                                            </div>
+                                        @enderror
                                 </div>
                             </div>
                         </div>

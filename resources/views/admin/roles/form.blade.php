@@ -20,6 +20,11 @@
                                 <div class="form-group col-6">
                                     <label for="name">Rôles</label>
                                     <input id="name" type="text" class="form-control" name="name" value="{{isset($role) ? $role->name : ''}}" >
+                                        @error('name')
+                                            <div class="text-danger" >
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                 </div>
                             </div>
 

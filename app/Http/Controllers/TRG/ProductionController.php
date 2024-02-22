@@ -198,9 +198,11 @@ class ProductionController extends Controller
                         'quantite' => 0,
                         'atelier' => $atelierSelected->libelle,
                         'TRG' => $TRG,
+                        'nbreQuarts' => 0,
                         'usine' => $atelierSelected->usine,
                         'cadenceJournaliere' => $atelierSelected->cadenceJournaliere,
                         'NbreQuartDefault' => $atelierSelected->nbre_quart_default,
+                        'observation' => ''
                     ];
                 } else {
 
@@ -209,6 +211,9 @@ class ProductionController extends Controller
                             ->where('atelier_id', $atelierSelected->id)
                             ->where('usine', $production->usine)
                             ->first();
+                        $nbreQuarts = 0;
+
+
 
                         if ($l == null) {
                             $TRG = 0;
@@ -216,6 +221,7 @@ class ProductionController extends Controller
                             $jourProd += 1;
                             $TRG = $l->TRGjour;
                             $cumulTRG += $TRG;
+                            $nbreQuarts = $l->nbreQuarts;
                         }
 
                         $jourDuMois[] = [
@@ -224,8 +230,10 @@ class ProductionController extends Controller
                             'atelier' => $atelierSelected->libelle,
                             'TRG' => $TRG,
                             'usine' => $production->usine,
+                            'nbreQuarts' => $nbreQuarts,
                             'cadenceJournaliere' => $atelierSelected->cadenceJournaliere,
                             'NbreQuartDefault' => $atelierSelected->nbre_quart_default,
+                            'observation' => isset($l->observation) ? $l->observation : ''
                         ];
                     }
                 }
@@ -385,10 +393,8 @@ class ProductionController extends Controller
                         'dateFormated' =>  date('d/m/Y', strtotime($dateSearch)),
                         'atelier' => $atelierSelected->libelle,
                         'quantite' => 0,
+                        'nbreQuarts' => 0,
                         'TRG' => $TRG,
-                        //'usine' => $atelierSelected->usine,
-                        'cadenceJournaliere' => $atelierSelected->cadenceJournaliere,
-                        'NbreQuartDefault' => $atelierSelected->nbre_quart_default,
                         'observation' => "",
                     ];
                 } else {
@@ -415,11 +421,9 @@ class ProductionController extends Controller
                             'dateFormated' =>  date('d/m/Y', strtotime($production->DateProd)),
                             'atelier' => $atelierSelected->libelle,
                             'quantite' => $production->totalQty,
+                            'nbreQuarts' => isset($l->nbreQuarts) ? $l->nbreQuarts : 0,
                             'TRG' => $TRG,
-                            //'usine' => $production->usine,
-                            'cadenceJournaliere' => $atelierSelected->cadenceJournaliere,
-                            'NbreQuartDefault' => $atelierSelected->nbre_quart_default,
-                            'observation' => $observation,
+                            'observation' => isset($l->observation) ? $l->observation : ''
                         ];
                     }
                 }

@@ -8,9 +8,11 @@
                     <h4>Liste des rôles</h4>
                     <div class="button text-right ml-4">
                         
-                        <a href="{{route('roles.create')}}" class="btn btn-icon icon-left btn-primary">
-                            <i class="fa fa-plus-square" aria-hidden="true"></i> Ajouter
-                        </a>
+                        @can('role-create')
+                            <a href="{{route('roles.create')}}" class="btn btn-icon icon-left btn-primary">
+                                <i class="fa fa-plus-square" aria-hidden="true"></i> Ajouter
+                            </a>
+                        @endcan
                     </div> 
                 </div>
                 <div class="card-body p-0">
@@ -31,9 +33,11 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        <a href="{{route('roles.edit',$role->id)}}" class="text-info">
-                                            <span class="material-symbols-outlined">edit</span>
-                                        </a>
+                                        @can('role-edit')
+                                            <a href="{{route('roles.edit',$role->id)}}" class="text-info">
+                                                <span class="material-symbols-outlined">edit</span>
+                                            </a>
+                                        @endcan
 
                                         {{-- <a herf="#" onClick="deleteRole('rôles',{{$role->id}})" class="text-danger">
                                             <span class="material-symbols-outlined">delete</span>
@@ -43,9 +47,11 @@
                                             @method("DELETE")
                                         </form> --}}
 
-                                        <a href="#" class="text-danger" onClick="deleteRoles('roles',{{$role->id}})">
-                                            <span class="material-symbols-outlined">delete</span>
-                                        </a>
+                                        @can('role-delete')
+                                            <a href="#" class="text-danger" onClick="deleteRoles('roles',{{$role->id}})">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </a>
+                                        @endcan
                                         <form id="delete-{{$role->id}}" action="{{route('roles.destroy',$role->id)}}" method="POST">
                                             @csrf
                                             @method("DELETE")

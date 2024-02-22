@@ -35,9 +35,8 @@ class ProductionExport implements FromCollection, WithMapping, WithHeadings
             'Date',
             'Atelier',
             'Quantité de la production',
-            'TRG du jour',
-            'Cadence journaliere',
-            'Nombre de quart par default',
+            'Nb Quarts',
+            'TRG en %',
             'Observation'
         ];
     }

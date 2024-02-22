@@ -8,9 +8,11 @@
                     <h4>Liste des rôles</h4>
                     <div class="button text-right ml-4">
                         
-                        <a href="{{route('permissions.create')}}" class="btn btn-icon icon-left btn-primary">
-                            <i class="fa fa-plus-square" aria-hidden="true"></i> Ajouter
-                        </a>
+                        @can('permi-create')
+                            <a href="{{route('permissions.create')}}" class="btn btn-icon icon-left btn-primary">
+                                <i class="fa fa-plus-square" aria-hidden="true"></i> Ajouter
+                            </a>
+                        @endcan
                     </div> 
                 </div>
                 <div class="card-body p-0">
@@ -31,15 +33,19 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        <a href="{{route('permissions.edit',$permission->id)}}" class="text-info">
-                                            <span class="material-symbols-outlined">edit</span>
-                                        </a>
+                                        @can('permi-edit')
+                                            <a href="{{route('permissions.edit',$permission->id)}}" class="text-info">
+                                                <span class="material-symbols-outlined">edit</span>
+                                            </a>
+                                        @endcan
 
                                     
 
-                                        <a href="#" class="text-danger" onClick="deletePermission('permissions',{{$permission->id}})">
-                                            <span class="material-symbols-outlined">delete</span>
-                                        </a>
+                                        @can('permi-delete')
+                                            <a href="#" class="text-danger" onClick="deletePermission('permissions',{{$permission->id}})">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </a>
+                                        @endcan
                                         <form id="delete-{{$permission->id}}" action="{{route('permissions.destroy',$permission->id)}}" method="POST">
                                             @csrf
                                             @method("DELETE")
