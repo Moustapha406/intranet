@@ -206,6 +206,11 @@ class ProductionController extends Controller
                 if ($productionForUsine->isEmpty()) {
                     //dd(!$productionJours->isEmpty());
                     //dd($observation);
+                    $prod = ProductionJour::wheredate('dateProd', $dateSearch)
+                    ->where('atelier_id', $atelierSelected->id)
+                    ->where('usine',$atelierSelected->usine)
+                    ->first();
+                    
                     $jourDuMois[] = [
                         'dateFormated' =>  date('d/m/Y', strtotime($dateSearch)),
                         'quantite' => 0,
@@ -215,9 +220,11 @@ class ProductionController extends Controller
                         'usine' => $atelierSelected->usine,
                         'cadenceJournaliere' => $atelierSelected->cadenceJournaliere,
                         'NbreQuartDefault' => $atelierSelected->nbre_quart_default,
-                        'observation' => ''
+                        'observation' =>  isset($prod->observation)  ? $prod->observation : ''
                     ];
                 } else {
+
+                    //dd('production non vide');
 
                     foreach ($productionForUsine as $production) {
                         $l = ProductionJour::wheredate('dateProd', $production->DateProd)
@@ -402,13 +409,17 @@ class ProductionController extends Controller
 
                 if ($productionForUsine->isEmpty()) {
                     //dd(!$productionJours->isEmpty());
+                    $prod = ProductionJour::wheredate('dateProd', $dateSearch)
+                    ->where('atelier_id', $atelierSelected->id)
+                    ->where('usine',$atelierSelected->usine)
+                    ->first();
                     $jourDuMois[] = [
                         'dateFormated' =>  date('d/m/Y', strtotime($dateSearch)),
                         'atelier' => $atelierSelected->libelle,
                         'quantite' => 0,
                         'nbreQuarts' => 0,
                         'TRG' => $TRG,
-                        'observation' => "",
+                        'observation' => isset($prod->observation)  ? $prod->observation : ''
                     ];
                 } else {
 
