@@ -21,9 +21,18 @@ class ArticleController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $articles = Article::orderBy('article', 'desc')->paginate(30);
+
+
+        $articles = Article::query()
+            ->when(
+                $request->search,
+                function ($query) use ($request) {
+                    $query->where('article', 'Like', '%' . $request->search . '%')
+                        ->orwhere('designation', 'Like', '%' . $request->search . '%');
+                }
+            )->orderBy('article', 'desc')->paginate(30);
 
         return view('TRG.articles.index', compact('articles')); //->with('i',($request->input('page',1) -1 ) *10)
     }

@@ -7,9 +7,9 @@
                 <div class="card-header d-flex justify-content-between">
                   <h4 >Liste des utilisateurs</h4>
                   <div class="card-header-form">
-                    <form>
+                    <form method="GET" action="{{route('users.index')}}">
                       <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" name="search" value="{{request('search')}}" placeholder="Search">
                         <div class="input-group-btn">
                           <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                         </div>
@@ -30,6 +30,7 @@
                             <th>Nom</th>
                             <th>Prénom</th>
                             <th>Genre</th>
+                            <th>Statut</th>
                             <th>Rôles</th>
                             <th class="text-center">Action</th>
                         </tr>
@@ -81,6 +82,13 @@
                     </table>
                   </div>
                 </div>
+
+                <div class="card-footer text-right">
+                    <nav class="d-inline-block">
+                      {{$users->links()}}
+                    </nav>
+                </div>
+
               </div>
             </div>
           </div>

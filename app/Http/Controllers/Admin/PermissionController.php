@@ -19,9 +19,17 @@ class PermissionController extends Controller
         $this->middleware('permission:permi-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:permi-delete', ['only' => ['destroy']]);
     }
-    public function index()
+    public function index(Request $request)
     {
-        $permissions = Permission::orderBy("id", "desc")->paginate(10);
+        //$permissions = Permission::orderBy("id", "desc")->paginate(10);
+
+        $permissions = Permission::query()
+            ->when(
+                $request->search,
+                function ($query) use ($request) {
+                    $query->where('name', 'Like', '%' . $request->search . '%');
+                }
+            )->orderBy('name', 'desc')->paginate(10);
 
         return view("admin.permission.index", compact('permissions'));
     }

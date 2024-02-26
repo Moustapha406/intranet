@@ -21,9 +21,27 @@ class AtelierController extends Controller
         $this->middleware('permission:atelier-affecter', ['only' => ['affecter']]);
         $this->middleware('permission:atelier-delete', ['only' => ['destroy']]);
     }
-    public function index()
+    public function index(Request $request)
     {
-        $ateliers = Atelier::orderBy('libelle', 'desc')->paginate(10);
+        //dd($request->search);
+
+        //$ateliers = Atelier::query();
+        $ateliers = Atelier::query()
+            ->when(
+                $request->search,
+                function ($query) use ($request) {
+                    $query->where('libelle', 'Like', '%' . $request->search . '%');
+                }
+            )->orderBy('libelle', 'desc')->paginate(10);
+
+
+        // if ($request->search) {
+        //     $ateliers->where('libelle', 'Like', '%' . $request->search . '%');
+        // }
+
+        // $ateliers->orderBy('libelle', 'desc')->paginate(10);
+
+        //$ateliers = Atelier::orderBy('libelle', 'desc')->paginate(10);
 
 
 

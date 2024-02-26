@@ -6,6 +6,16 @@
             <div class="card card-primary">
                 <div class="card-header d-flex justify-content-between">
                     <h4>Liste des rôles</h4>
+                    <div class="card-header-form">
+                        <form method="GET" action="{{route('roles.index')}}">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="search" value="{{request('search')}}" placeholder="Search">
+                            <div class="input-group-btn">
+                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
                     <div class="button text-right ml-4">
                         
                         @can('role-create')

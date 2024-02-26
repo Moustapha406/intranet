@@ -38,7 +38,7 @@
                             
                             <li class="list-group-item">
                                 @foreach ($user->roles as $role)
-                                    <span class="badge badge-pill">{{$role->libelle}}</span>
+                                    <span class="badge badge-info">{{$role->name}}</span>
                                 @endforeach
                             </li>
                             

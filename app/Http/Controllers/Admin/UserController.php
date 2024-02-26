@@ -18,13 +18,28 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
         // $users = User::all();
         $roles = Role::all();
 
-        $users = User::with("roles")->get();
+        // $users = User::with("roles")->get();
+
+        $users = User::query()
+            ->when(
+                $request->search,
+                function ($query) use ($request) {
+                    $query->where('email', 'Like', '%' . $request->search . '%')
+                        ->orwhere('nom', 'Like', '%' . $request->search . '%')
+                        ->orwhere('prenom', 'Like', '%' . $request->search . '%')
+                        ->orwhere('site', 'Like', '%' . $request->search . '%')
+                        ->orwhere('departement', 'Like', '%' . $request->search . '%')
+                        ->orwhere('fonction', 'Like', '%' . $request->search . '%');
+                }
+            )->with("roles")
+            ->orderBy('email', 'desc')
+            ->paginate(10);
 
 
 
